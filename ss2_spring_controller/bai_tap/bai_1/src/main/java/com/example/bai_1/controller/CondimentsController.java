@@ -18,22 +18,17 @@ import java.util.List;
 public class CondimentsController {
     @Autowired
     private ICondimentsService condimentsService;
+
     @GetMapping({"/", "/index"})
     public String showCondimentsList(Model model) {
-        try {
-            List<Condiments> condimentsList = condimentsService.findAll();
-            model.addAttribute("condimentsList", condimentsList);
-            return "index";
-        } catch (Exception e) {
-            model.addAttribute("error", "Không thể tải danh sách gia vị");
-            return "error";
-        }
+        List<Condiments> condimentsList = condimentsService.findAll();
+        model.addAttribute("condimentsList", condimentsList);
+        return "index";
     }
+
     @PostMapping("/save")
-    public String saveSelectedCondiments(
-            @RequestParam(value = "condiments", required = false) String[] condiments,
-            RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("condiments", condiments);
-        return "redirect:/result";
+    public String save(@RequestParam(value = "condiment", required = false) String[] condiment, Model model) {
+        model.addAttribute("condiments", condiment);
+        return "result";
     }
 }
