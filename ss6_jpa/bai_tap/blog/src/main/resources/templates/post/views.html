@@ -6,13 +6,36 @@
     <th:block th:insert="~{/layout::library}"/>
 </head>
 <body>
-    <h1>Chi tiết bài viết</h1>
-    <div>
-        <h2 th:text="${post.title}"></h2>
-        <p th:text="${post.content}"></p>
-        <p><strong>Thể loại:</strong> <span th:text="${post.category.name}"></span></p>
-        <p><strong>Tác giả:</strong> <span th:text="${post.author}"></span></p>
+<th:block th:insert="~{/layout::navbar}"/>
+<div class="container mt-5" style="max-width: 800px;">
+    <h2 class="mb-4 text-center text-primary">Chi Tiết Bài Viết</h2>
+
+    <div class="card shadow">
+        <div class="card-body">
+            <h4 class="card-title text-success mb-3" th:text="${post.title}">Tiêu đề</h4>
+
+            <p class="card-text" th:text="${post.content}">Nội dung</p>
+
+            <p class="mb-1">
+                <strong>Thể loại:</strong>
+                <span th:text="${post.category.name}">Thể loại</span>
+            </p>
+
+            <p class="mb-1">
+                <strong>Tác giả:</strong>
+                <span th:text="${post.author}">Tác giả</span>
+            </p>
+
+            <p class="mb-1">
+                <strong>Ngày tạo:</strong>
+                <span th:text="${post.createdAt != null ? #temporals.format(post.createdAt, 'dd/MM/yyyy HH:mm') : 'N/A'}">Ngày tạo</span>
+            </p>
+        </div>
+
+        <div class="card-footer text-end">
+            <a class="btn btn-secondary" href="/post">← Trở lại danh sách</a>
+        </div>
     </div>
-    <a class="btn btn-primary" href="/post">Trở lại danh sách bài viết</a>
+</div>
 </body>
 </html>

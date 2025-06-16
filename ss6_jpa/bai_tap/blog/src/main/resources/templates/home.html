@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang chủ</title>
+    <th:block th:insert="~{/layout::library}"/>
+</head>
+<body>
+
+<!-- Navbar -->
+<div th:replace="~{/layout::navbar}"></div>
+
+<!-- Nội dung chính -->
+<div class="container mt-5 text-center">
+    <h1 class="text-primary mb-4">Chào mừng đến với trang chủ!</h1>
+    <p class="lead mb-4">Đây là trang chính của ứng dụng quản lý blog.</p>
+
+    <div class="d-flex justify-content-center gap-4">
+        <a href="/post" class="btn btn-outline-primary btn-lg">📄 Danh sách bài viết</a>
+        <a href="/category" class="btn btn-outline-success btn-lg">📚 Danh sách thể loại</a>
+    </div>
+</div>
+</body>
+</html>

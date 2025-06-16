@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chỉnh sửa</title>
+  <th:block th:insert="~{/layout::library}"/>
+</head>
+<body>
+<th:block th:insert="~{/layout::navbar}"/>
+
+<h1 class="mb-4 text-warning text-center">Chỉnh Sửa Thể Loại</h1>
+
+<form th:action="@{/category/edit}" method="post" th:object="${category}" class="mx-auto" style="max-width: 400px;">
+  <div class="mb-3">
+    <label for="name" class="form-label">Tên thể loại:</label>
+    <input type="text" th:field="*{name}" id="name" class="form-control" required>
+  </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Miêu tả:</label>
+        <textarea th:field="*{description}" id="description" class="form-control" rows="3"></textarea>
+  <div class="d-flex justify-content-between">
+    <button type="submit" class="btn btn-primary">Cập nhật</button>
+    <a th:href="@{/category}" class="btn btn-secondary">Quay lại</a>
+  </div>
+</form>
+
+</body>
+</html>

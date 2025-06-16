@@ -6,36 +6,87 @@
     <th:block th:insert="~{/layout::library}"/>
 </head>
 <body>
-    <h1>Danh sách bài viết</h1>
-    <a href="/post/add">Tạo bài viết mới</a>
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Tiêu đề</th>
-            <th>Nội dung</th>
-            <th>Thể loại</th>
-            <th>Tác giả</th>
-            <th colspan="3">Hành động</th>
-        </tr>
+<th:block th:insert="~{/layout::navbar}"/>
+<h1 class="mb-4 text-center text-primary">Danh sách bài viết</h1>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <a class="btn btn-success" href="/post/add">+ Tạo bài viết mới</a>
+    <form th:action="@{/post/search}" method="get" class="d-flex align-items-center gap-2">
+        <input type="text" name="keyword" class="form-control" placeholder="Tìm kiếm bài viết..."
+               th:value="${keyword}" style="width: 250px;"/>
+
+        <select name="categoryId" class="form-select" style="width: 200px;">
+            <option value="">Chọn thể loại</option>
+            <option th:each="category : ${categories}"
+                    th:value="${category.id}"
+                    th:text="${category.name}"
+                    th:selected="${category.id == categoryId}"></option>
+        </select>
+
+        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+    </form>
+</div>
+
+<table class="table table-bordered text-center align-middle">
+    <thead class="table-light">
+    <tr>
+        <th>ID</th>
+        <th>Tiêu đề</th>
+        <th>Nội dung</th>
+        <th>Thể loại</th>
+        <th>Tác giả</th>
+        <th>Ngày tạo</th>
+        <th colspan="3">Hành động</th>
+    </tr>
     </thead>
     <tbody>
-        <tr th:each="post : ${posts}">
-            <td th:text="${post.id}"></td>
-            <td th:text="${post.title}"></td>
-            <td th:text="${post.content}"></td>
-            <td th:text="${post.category.name}"></td>
-            <td th:text="${post.author}"></td>
-            <td>
-                <a th:href="@{/delete/{id}(id=${post.id})}" class="btn btn-danger" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a>
-            </td>
-            <td>
-                <a th:href="@{/edit/{id}(id=${post.id})}" class="btn btn-primary">Sửa</a>
-            </td>
-            <td>
-                <a th:href="@{/posts/{id}(id=${post.id})}">Xem chi tiết</a>
-        </tr>
+    <tr th:each="post : ${posts.content}">
+        <td th:text="${post.id}"></td>
+        <td th:text="${post.title}"></td>
+        <td th:text="${post.content}"></td>
+        <td th:text="${post.category.name}"></td>
+        <td th:text="${post.author}"></td>
+        <td th:text="${post.createdAt != null ? #temporals.format(post.createdAt, 'dd/MM/yyyy') : 'N/A'}"></td>
+        <td>
+            <a th:href="@{/delete/{id}(id=${post.id})}" class="btn btn-danger btn-sm"
+               onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a>
+        </td>
+        <td>
+            <a th:href="@{/edit/{id}(id=${post.id})}" class="btn btn-primary btn-sm">Sửa</a>
+        </td>
+        <td>
+            <a th:href="@{/post/{id}(id=${post.id})}" class="btn btn-secondary btn-sm">Chi tiết</a>
+        </td>
+    </tr>
     </tbody>
 </table>
+
+<!-- PHÂN TRANG -->
+<nav th:if="${posts.totalPages > 1}">
+    <ul class="pagination justify-content-center mt-3">
+        <li class="page-item" th:classappend="${posts.first} ? 'disabled'">
+            <a class="page-link"
+               th:href="@{${requestURI}(page=${posts.number - 1}, keyword=${keyword}, categoryId=${categoryId})}">
+                &laquo;
+            </a>
+        </li>
+
+        <li class="page-item"
+            th:each="i : ${#numbers.sequence(0, posts.totalPages - 1)}"
+            th:classappend="${i == posts.number} ? 'active'">
+            <a class="page-link"
+               th:href="@{${requestURI}(page=${i}, keyword=${keyword}, categoryId=${categoryId})}"
+               th:text="${i + 1}"></a>
+        </li>
+
+        <li class="page-item" th:classappend="${posts.last} ? 'disabled'">
+            <a class="page-link"
+               th:href="@{${requestURI}(page=${posts.number + 1}, keyword=${keyword}, categoryId=${categoryId})}">
+                &raquo;
+            </a>
+        </li>
+    </ul>
+</nav>
+
+
 </body>
 </html>
