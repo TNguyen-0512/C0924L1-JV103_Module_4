@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm mới</title>
+    <th:block th:insert="~{/layout::library}"/>
+</head>
+<body>
+<h1>Thêm bài viết mới</h1>
+
+<form th:action="@{/post/add}" method="post" th:object="${post}">
+    <div>
+        <label for="title">Tiêu đề:</label>
+        <input type="text" id="title" th:field="*{title}" required>
+    </div>
+
+    <div>
+        <label for="content">Nội dung:</label>
+        <textarea id="content" th:field="*{content}" required></textarea>
+    </div>
+
+    <div>
+        <label>Thể loại:</label><br>
+        <input type="radio" th:field="*{category}" value="1" id="cate1">
+        <label for="cate1">Công nghệ</label><br>
+
+        <input type="radio" th:field="*{category}" value="2" id="cate2">
+        <label for="cate2">Kỹ năng sống</label><br>
+
+        <input type="radio" th:field="*{category}" value="3" id="cate3">
+        <label for="cate3">Lập trình</label><br>
+    </div>
+
+    <div>
+        <label for="author">Tác giả:</label>
+        <input type="text" id="author" th:field="*{author}" required>
+    </div>
+
+    <button type="submit">Lưu bài viết</button>
+</form>
+</body>
+</html>

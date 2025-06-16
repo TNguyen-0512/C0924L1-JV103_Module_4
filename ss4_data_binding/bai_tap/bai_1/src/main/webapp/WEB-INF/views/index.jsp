@@ -10,7 +10,7 @@
 </head>
 <body>
 <h2>Settings</h2>
-<form:form action="/settings" method="post" modelAttribute="setting">
+<form:form action="/settings" method="post" modelAttribute="email">
     <div class="mb-3">
         <label class="form-label">Languages</label>
         <form:select path="language" cssClass="form-select">

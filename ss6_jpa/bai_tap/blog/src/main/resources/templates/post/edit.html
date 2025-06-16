@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sửa bài viết</title>
+    <th:block th:insert="~{/layout::library}"/>
+</head>
+<body>
+<h1>Chỉnh sửa bài viết</h1>
+<form th:action="@{/edit/{id}(id=${post.id})}" th:object="${post}" method="post">
+    <div>
+        <label for="title">Tiêu đề:</label>
+        <input type="text" id="title" th:field="*{title}" required>
+    </div>
+
+    <div>
+        <label for="content">Nội dung:</label>
+        <textarea id="content" th:field="*{content}" required></textarea>
+    </div>
+
+    <div>
+        <label for="category">Thể loại:</label>
+        <select id="category" th:field="*{category.id}">
+            <option th:each="category : ${categories}"
+                    th:value="${category.id}"
+                    th:text="${category.name}">
+            </option>
+        </select>
+    </div>
+    <div>
+        <label for="author">Tác giả:</label>
+        <input type="text" id="author" th:field="*{author}" required>
+    </div>
+    <button type="submit">Cập nhật</button>
+    <a th:href="@{/post}">Quay lại</a>
+</form>
+
+</body>
+</html>

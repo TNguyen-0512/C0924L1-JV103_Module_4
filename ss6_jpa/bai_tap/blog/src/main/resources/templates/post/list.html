@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang Chủ</title>
+    <th:block th:insert="~{/layout::library}"/>
+</head>
+<body>
+    <h1>Danh sách bài viết</h1>
+    <a href="/post/add">Tạo bài viết mới</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tiêu đề</th>
+            <th>Nội dung</th>
+            <th>Thể loại</th>
+            <th>Tác giả</th>
+            <th colspan="3">Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="post : ${posts}">
+            <td th:text="${post.id}"></td>
+            <td th:text="${post.title}"></td>
+            <td th:text="${post.content}"></td>
+            <td th:text="${post.category.name}"></td>
+            <td th:text="${post.author}"></td>
+            <td>
+                <a th:href="@{/delete/{id}(id=${post.id})}" class="btn btn-danger" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a>
+            </td>
+            <td>
+                <a th:href="@{/edit/{id}(id=${post.id})}" class="btn btn-primary">Sửa</a>
+            </td>
+            <td>
+                <a th:href="@{/posts/{id}(id=${post.id})}">Xem chi tiết</a>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

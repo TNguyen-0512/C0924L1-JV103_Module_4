@@ -1,25 +1,25 @@
 package com.example.bai_1.repository;
 
 import com.example.bai_1.model.Product;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
+
 @Repository
 public class ProductRepository implements IProductRepository {
-    private static List<Product> products = new ArrayList<>();
-
-    static {
-        products.add(new Product(1, "TV", 45000, "Tv", "Panasonic"));
-        products.add(new Product(2, "Tủ lạnh", 45000, "Fridge", "Panasonic"));
-        products.add(new Product(3, "Máy giặt", 45000, "Washing Machine", "Panasonic"));
-        products.add(new Product(4, "Điều hòa", 45000, "Air Conditioner", "Panasonic"));
-    }
+    private static List<Product> productList = new ArrayList<>();
 
     @Override
     public List<Product> findAll() {
-        return products;
+       List<Product> products = BaseRepository.getEntityManager().createQuery("SELECT p FROM Product AS p");
+        return productList;
     }
 
     @Override
@@ -29,12 +29,10 @@ public class ProductRepository implements IProductRepository {
 
     @Override
     public Product findById(int id) {
-        for (Product product : products) {
-            if (product.getId() == id) {
-                return product;
-            }
-        }
-        return null;
+        String queryStr = "SELECT p FROM Product AS p WHERE p.id = :id";
+        TypedQuery<Product> query = entityManager.createQuery(queryStr, Product.class);
+        query.setParameter("id", id);
+        return query.getSingleResult();
     }
 
     @Override
@@ -49,6 +47,21 @@ public class ProductRepository implements IProductRepository {
 
     @Override
     public void deleteById(int id) {
-        products.removeIf(product -> product.getId() == id);
+        Product product = findById(id);
+        if (product != null) {
+            Transaction transaction = null;
+            if (product != null) {
+                try (Session session = sessionFactory.openSession()) {
+                    transaction = session.beginTransaction();
+                    session.remove(product);
+                    transaction.commit();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    if (transaction != null) {
+                        transaction.rollback();
+                    }
+                }
+            }
+        }
     }
 }

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d9cdd049-1c88-43c8-8cf8-0dbbeb8e3f9f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../../../ss3_thymeleaf/bai_tap/demo/src/main/java/com/example/demo/dto/ProductDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../blog/src/main/java/com/example/blog/dto/CategoryDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../blog/src/main/java/com/example/blog/dto/PostDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../blog/src/main/java/com/example/blog/model/Category.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../blog/src/main/java/com/example/blog/model/Post.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../blog/src/main/java/com/example/blog/repository/ICategoryRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../blog/src/main/java/com/example/blog/repository/IPostRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../ss2_spring_controller/bai_tap/bai_2/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../ss2_spring_controller/bai_tap/bai_2/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../ss3_thymeleaf/bai_tap/bai_1/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../ss3_thymeleaf/bai_tap/bai_1/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../ss3_thymeleaf/bai_tap/bai_1/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../ss3_thymeleaf/bai_tap/bai_1/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../ss3_thymeleaf/bai_tap/bai_1/src/main/java/com/example/bai_1/config/AppConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../ss3_thymeleaf/bai_tap/bai_1/src/main/java/com/example/bai_1/config/AppConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../ss3_thymeleaf/bai_tap/bai_1/src/main/java/com/example/bai_1/model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../ss3_thymeleaf/bai_tap/bai_1/src/main/java/com/example/bai_1/model/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../ss3_thymeleaf/bai_tap/bai_1/src/main/java/com/example/bai_1/repository/BaseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../ss3_thymeleaf/bai_tap/bai_1/src/main/java/com/example/bai_1/repository/BaseRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../ss3_thymeleaf/bai_tap/bai_1/src/main/java/com/example/bai_1/repository/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../ss3_thymeleaf/bai_tap/bai_1/src/main/java/com/example/bai_1/repository/ProductRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../ss3_thymeleaf/bai_tap/bai_1/src/main/resources/hibernate.conf.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../ss3_thymeleaf/bai_tap/bai_1/src/main/resources/hibernate.conf.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../ss3_thymeleaf/bai_tap/demo/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../ss3_thymeleaf/bai_tap/demo/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../ss4_data_binding/bai_tap/bai_1/src/main/java/com/example/bai_1/controller/SettingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../ss4_data_binding/bai_tap/bai_1/src/main/java/com/example/bai_1/controller/SettingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../ss4_data_binding/bai_tap/bai_1/src/main/webapp/WEB-INF/views/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../ss4_data_binding/bai_tap/bai_1/src/main/webapp/WEB-INF/views/index.jsp" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2y2v5a950P2KdHL8Xf5pADjdNPk" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d9cdd049-1c88-43c8-8cf8-0dbbeb8e3f9f" name="Changes" comment="" />
+      <created>1749045302669</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1749045302669</updated>
+      <workItem from="1749045303817" duration="644000" />
+      <workItem from="1749218912218" duration="82000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

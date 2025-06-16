@@ -14,7 +14,7 @@ public class SettingController {
 
     @GetMapping({"/", "/index"})
     public String showForm(Model model) {
-        model.addAttribute("setting", email);
+        model.addAttribute("email", email);
         return "index";
     }
 
@@ -35,8 +35,4 @@ public class SettingController {
         return Arrays.asList(5, 10, 25, 50, 100);
     }
 
-    @ModelAttribute("setting")
-    public Email getEmailSetting() {
-        return email;
-    }
 }
