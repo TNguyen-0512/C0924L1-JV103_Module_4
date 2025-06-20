@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm mới bài hát</title>
+    <th:block th:insert="~{/layout::library}"/>
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 bg-white p-4 rounded shadow-sm">
+            <h2 class="text-center text-primary mb-4">🎶 Thêm mới bài hát</h2>
+
+            <form th:action="@{/songs/add}" method="post">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Tên bài hát</label>
+                    <input type="text" id="name" name="name" class="form-control" required placeholder="Nhập tên bài hát">
+                </div>
+
+                <div class="mb-3">
+                    <label for="artist" class="form-label">Nghệ sĩ</label>
+                    <input type="text" id="artist" name="artist" class="form-control" required placeholder="Tên nghệ sĩ">
+                </div>
+
+                <div class="mb-3">
+                    <label for="genre" class="form-label">Thể loại</label>
+                    <input type="text" id="genre" name="genre" class="form-control" required placeholder="Pop, Rock...">
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a href="/" class="btn btn-secondary">⬅ Quay lại</a>
+                    <button type="submit" class="btn btn-primary">+ Thêm mới</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
