@@ -50,6 +50,13 @@ public class SongController {
             return "redirect:/";
         }
     }
+    @PostMapping("/songs/edit/{id}")
+    public String updateSong(@PathVariable Integer id, @ModelAttribute Song song, RedirectAttributes redirectAttributes) {
+        song.setId(id);
+        songService.save(song);
+        redirectAttributes.addFlashAttribute("success", "🎵 Bài hát đã được cập nhật thành công!");
+        return "redirect:/";
+    }
     @GetMapping("/songs/{id}")
     public String viewSong(@PathVariable Integer id, Model model) {
         Song song = songService.findById(id);
