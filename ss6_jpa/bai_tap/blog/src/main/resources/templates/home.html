@@ -2,23 +2,330 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Trang chủ</title>
+    <title>Trang chủ - Blog Manager</title>
     <th:block th:insert="~{/layout::library}"/>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .hero-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            padding: 3rem;
+            margin-top: 2rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 1.5rem;
+            animation: slideInLeft 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2.5rem;
+            animation: slideInRight 1s ease-out 0.2s both;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            border: none;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transform: translateY(0);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .feature-description {
+            color: #6c757d;
+            line-height: 1.6;
+        }
+
+        .stats-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-item {
+            text-align: center;
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .circle-1 {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .circle-2 {
+            width: 60px;
+            height: 60px;
+            top: 20%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .circle-3 {
+            width: 100px;
+            height: 100px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .btn-modern {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            text-decoration: none;
+            display: inline-block;
+            margin: 0.5rem;
+        }
+
+        .btn-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            color: white;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .hero-section {
+                padding: 2rem;
+            }
+            .feature-card {
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
 </head>
 <body>
+
+<!-- Floating background elements -->
+<div class="floating-elements">
+    <div class="floating-circle circle-1"></div>
+    <div class="floating-circle circle-2"></div>
+    <div class="floating-circle circle-3"></div>
+</div>
 
 <!-- Navbar -->
 <div th:replace="~{/layout::navbar}"></div>
 
-<!-- Nội dung chính -->
-<div class="container mt-5 text-center">
-    <h1 class="text-primary mb-4">Chào mừng đến với trang chủ!</h1>
-    <p class="lead mb-4">Đây là trang chính của ứng dụng quản lý blog.</p>
+<!-- Hero Section -->
+<div class="container">
+    <div class="hero-section">
+        <h1 class="hero-title">✨ Blog Manager</h1>
+        <p class="hero-subtitle">Nền tảng quản lý nội dung hiện đại và mạnh mẽ</p>
 
-    <div class="d-flex justify-content-center gap-4">
-        <a href="/post" class="btn btn-outline-primary btn-lg">📄 Danh sách bài viết</a>
-        <a href="/category" class="btn btn-outline-success btn-lg">📚 Danh sách thể loại</a>
+        <!-- Quick Stats -->
+        <div class="stats-section">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="stat-item">
+                        <span class="stat-number">150+</span>
+                        <span class="stat-label">Bài viết</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-item">
+                        <span class="stat-number">25+</span>
+                        <span class="stat-label">Thể loại</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-item">
+                        <span class="stat-number">1K+</span>
+                        <span class="stat-label">Lượt xem</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="text-center mb-4">
+            <a href="/post" class="btn-modern">
+                📝 Quản lý bài viết
+            </a>
+            <a href="/category" class="btn-modern">
+                🏷️ Quản lý thể loại
+            </a>
+        </div>
+    </div>
+
+    <!-- Feature Cards -->
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <a href="/post" class="feature-card">
+                <div class="feature-icon">📄</div>
+                <h3 class="feature-title">Quản lý bài viết</h3>
+                <p class="feature-description">
+                    Tạo, chỉnh sửa và quản lý tất cả bài viết của bạn một cách dễ dàng với giao diện thân thiện.
+                </p>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="/category" class="feature-card">
+                <div class="feature-icon">📚</div>
+                <h3 class="feature-title">Phân loại nội dung</h3>
+                <p class="feature-description">
+                    Tổ chức nội dung theo thể loại, giúp người đọc dễ dàng tìm kiếm và khám phá.
+                </p>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3 class="feature-title">Thống kê chi tiết</h3>
+                <p class="feature-description">
+                    Theo dõi hiệu suất nội dung với các báo cáo và thống kê chi tiết.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Features -->
+    <div class="row mt-4 mb-5">
+        <div class="col-md-6">
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3 class="feature-title">Tìm kiếm thông minh</h3>
+                <p class="feature-description">
+                    Tìm kiếm nhanh chóng và chính xác với công cụ tìm kiếm tiên tiến.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3 class="feature-title">Giao diện đẹp mắt</h3>
+                <p class="feature-description">
+                    Thiết kế hiện đại, responsive và thân thiện với người dùng trên mọi thiết bị.
+                </p>
+            </div>
+        </div>
     </div>
 </div>
+
 </body>
 </html>

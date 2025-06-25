@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Chi Tiết</title>
@@ -7,6 +7,7 @@
 </head>
 <body>
 <th:block th:insert="~{/layout::navbar}"/>
+
 <div class="container mt-5" style="max-width: 800px;">
     <h2 class="mb-4 text-center text-primary">Chi Tiết Bài Viết</h2>
 
@@ -18,7 +19,7 @@
 
             <p class="mb-1">
                 <strong>Thể loại:</strong>
-                <span th:text="${post.category.name}">Thể loại</span>
+                <span th:text="${post.category != null ? post.category.name : 'Chưa phân loại'}">Thể loại</span>
             </p>
 
             <p class="mb-1">

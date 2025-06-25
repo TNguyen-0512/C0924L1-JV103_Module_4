@@ -4,16 +4,22 @@ import com.example.blog.model.Post;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface IPostService {
     Page<Post> findAll(Pageable pageable);
-    void add(Post post);
-    Post findById(Integer id);
-    void update(Post post);
-    void deleteById(Integer id);
-    Page<Post> findByTitle(String keyword, Pageable pageable); // ✅ Phân trang theo tiêu đề
-    Page<Post> findByCategoryId(Integer categoryId, Pageable pageable); // ✅ Phân trang theo thể loại
-    Page<Post> findByTitleAndCategory(String keyword, Integer categoryId, Pageable pageable); // ✅ Phân trang theo cả 2
-}
 
+    Post add(Post post); // Trả về Post sau khi lưu
+
+    Optional<Post> findById(Long id); // Dùng Long cho id và Optional để dễ xử lý 404
+
+    Post update(Post post); // Trả về Post sau khi cập nhật
+
+    void delete(Long id); // Dùng Long thay vì Integer
+
+    Page<Post> findByTitle(String keyword, Pageable pageable);
+
+    Page<Post> findByCategoryId(Long categoryId, Pageable pageable);
+
+    Page<Post> findByTitleAndCategory(String keyword, Long categoryId, Pageable pageable);
+}

@@ -2,91 +2,467 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Trang Chủ</title>
+    <title>Quản lý bài viết</title>
     <th:block th:insert="~{/layout::library}"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .main-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            margin: 2rem auto;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .page-header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .page-header p {
+            margin: 0.5rem 0 0;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .control-panel {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .btn-create {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            border: none;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-create:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+            color: white;
+            text-decoration: none;
+        }
+
+        .search-form {
+            background: white;
+            border-radius: 15px;
+            padding: 1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
+        }
+
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            padding: 0.6rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+
+        .btn-search {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-search:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            color: white;
+        }
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .post-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .post-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .post-id {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .post-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 0.8rem;
+            margin-right: 3rem;
+            line-height: 1.4;
+        }
+
+        .post-content {
+            color: #6c757d;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .post-category {
+            background: linear-gradient(45deg, #17a2b8, #6f42c1);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .post-author {
+            color: #495057;
+            font-weight: 600;
+        }
+
+        .post-date {
+            color: #6c757d;
+            font-size: 0.85rem;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-end;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .btn-action {
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: none;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .btn-detail {
+            background: linear-gradient(45deg, #6c757d, #495057);
+            color: white;
+        }
+
+        .btn-edit {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: white;
+        }
+
+        .btn-delete {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+            color: white;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            color: white;
+            text-decoration: none;
+        }
+
+        .custom-pagination {
+            display: flex;
+            justify-content: center;
+            margin: 3rem 0 1rem;
+        }
+
+        .pagination {
+            background: white;
+            border-radius: 15px;
+            padding: 0.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
+        }
+
+        .page-link {
+            border: none;
+            padding: 0.6rem 1rem;
+            margin: 0 0.2rem;
+            border-radius: 10px;
+            color: #667eea;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .page-item.active .page-link {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .page-link:hover {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            transform: translateY(-1px);
+        }
+
+        .no-posts {
+            text-align: center;
+            padding: 3rem;
+            color: #6c757d;
+        }
+
+        .no-posts i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            .posts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .control-panel {
+                padding: 1rem;
+            }
+
+            .search-form .d-flex {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .search-form .form-control,
+            .search-form .form-select {
+                width: 100% !important;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        .stats-bar {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            color: #495057;
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body>
 <th:block th:insert="~{/layout::navbar}"/>
-<h1 class="mb-4 text-center text-primary">Danh sách bài viết</h1>
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <a class="btn btn-success" href="/post/add">+ Tạo bài viết mới</a>
-    <form th:action="@{/post/search}" method="get" class="d-flex align-items-center gap-2">
-        <input type="text" name="keyword" class="form-control" placeholder="Tìm kiếm bài viết..."
-               th:value="${keyword}" style="width: 250px;"/>
 
-        <select name="categoryId" class="form-select" style="width: 200px;">
-            <option value="">Chọn thể loại</option>
-            <option th:each="category : ${categories}"
-                    th:value="${category.id}"
-                    th:text="${category.name}"
-                    th:selected="${category.id == categoryId}"></option>
-        </select>
+<div class="container main-container">
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1><i class="fas fa-newspaper"></i> Quản lý bài viết</h1>
+        <p>Tạo, chỉnh sửa và quản lý tất cả bài viết của bạn</p>
+    </div>
 
-        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
-    </form>
+    <!-- Control Panel -->
+    <div class="control-panel">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <a class="btn-create" href="/post/add">
+                <i class="fas fa-plus"></i>
+                Tạo bài viết mới
+            </a>
+
+            <form th:action="@{/post/search}" method="get" class="search-form">
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                    <input type="text" name="keyword" class="form-control" placeholder="🔍 Tìm kiếm bài viết..."
+                           th:value="${keyword}" style="width: 250px;"/>
+
+                    <select name="categoryId" class="form-select" style="width: 200px;">
+                        <option value="">📁 Chọn thể loại</option>
+                        <option th:each="category : ${categories}"
+                                th:value="${category.id}"
+                                th:text="${category.name}"
+                                th:selected="${category.id == categoryId}"></option>
+                    </select>
+
+                    <button type="submit" class="btn-search">
+                        <i class="fas fa-search"></i>
+                        Tìm kiếm
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar" th:if="${posts.content.size() > 0}">
+        <i class="fas fa-chart-bar"></i>
+        Hiển thị <strong th:text="${posts.content.size()}"></strong> bài viết
+        trên tổng số <strong th:text="${posts.totalElements}"></strong> bài viết
+        (Trang <strong th:text="${posts.number + 1}"></strong>/<strong th:text="${posts.totalPages}"></strong>)
+    </div>
+
+    <!-- Posts Grid -->
+    <div class="posts-grid" th:if="${posts.content.size() > 0}">
+        <div class="post-card" th:each="post : ${posts.content}">
+            <div class="post-id" th:text="'#' + ${post.id}"></div>
+
+            <h3 class="post-title" th:text="${post.title}"></h3>
+
+            <div class="post-content" th:text="${post.content}"></div>
+
+            <div class="post-meta">
+                <div>
+                    <span class="post-category" th:text="${post.category.name}"></span>
+                </div>
+                <div class="text-end">
+                    <div class="post-author">
+                        <i class="fas fa-user"></i>
+                        <span th:text="${post.author}"></span>
+                    </div>
+                    <div class="post-date">
+                        <i class="fas fa-calendar"></i>
+                        <span th:text="${post.createdAt != null ? #temporals.format(post.createdAt, 'dd/MM/yyyy') : 'N/A'}"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="post-actions">
+                <a th:href="@{/post/{id}(id=${post.id})}" class="btn-action btn-detail">
+                    <i class="fas fa-eye"></i>
+                    Chi tiết
+                </a>
+                <a th:href="@{/edit/{id}(id=${post.id})}" class="btn-action btn-edit">
+                    <i class="fas fa-edit"></i>
+                    Sửa
+                </a>
+                <a th:href="@{/delete/{id}(id=${post.id})}" class="btn-action btn-delete"
+                   onclick="return confirm('🗑️ Bạn có chắc chắn muốn xóa bài viết này?');">
+                    <i class="fas fa-trash"></i>
+                    Xóa
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- No Posts Message -->
+    <div class="no-posts" th:if="${posts.content.size() == 0}">
+        <i class="fas fa-newspaper"></i>
+        <h3>Không tìm thấy bài viết nào</h3>
+        <p>Hãy thử tìm kiếm với từ khóa khác hoặc tạo bài viết mới.</p>
+        <a href="/post/add" class="btn-create">
+            <i class="fas fa-plus"></i>
+            Tạo bài viết đầu tiên
+        </a>
+    </div>
+
+    <!-- Pagination -->
+    <div class="custom-pagination" th:if="${posts.totalPages > 1}">
+        <nav>
+            <ul class="pagination">
+                <li class="page-item" th:classappend="${posts.first} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{${requestURI}(page=${posts.number - 1}, keyword=${keyword}, categoryId=${categoryId})}">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                </li>
+
+                <li class="page-item"
+                    th:each="i : ${#numbers.sequence(0, posts.totalPages - 1)}"
+                    th:classappend="${i == posts.number} ? 'active'">
+                    <a class="page-link"
+                       th:href="@{${requestURI}(page=${i}, keyword=${keyword}, categoryId=${categoryId})}"
+                       th:text="${i + 1}"></a>
+                </li>
+
+                <li class="page-item" th:classappend="${posts.last} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{${requestURI}(page=${posts.number + 1}, keyword=${keyword}, categoryId=${categoryId})}">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>
-
-<table class="table table-bordered text-center align-middle">
-    <thead class="table-light">
-    <tr>
-        <th>ID</th>
-        <th>Tiêu đề</th>
-        <th>Nội dung</th>
-        <th>Thể loại</th>
-        <th>Tác giả</th>
-        <th>Ngày tạo</th>
-        <th colspan="3">Hành động</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="post : ${posts.content}">
-        <td th:text="${post.id}"></td>
-        <td th:text="${post.title}"></td>
-        <td th:text="${post.content}"></td>
-        <td th:text="${post.category.name}"></td>
-        <td th:text="${post.author}"></td>
-        <td th:text="${post.createdAt != null ? #temporals.format(post.createdAt, 'dd/MM/yyyy') : 'N/A'}"></td>
-        <td>
-            <a th:href="@{/delete/{id}(id=${post.id})}" class="btn btn-danger btn-sm"
-               onclick="return confirm('Bạn có muốn xóa không?');">Xóa</a>
-        </td>
-        <td>
-            <a th:href="@{/edit/{id}(id=${post.id})}" class="btn btn-primary btn-sm">Sửa</a>
-        </td>
-        <td>
-            <a th:href="@{/post/{id}(id=${post.id})}" class="btn btn-secondary btn-sm">Chi tiết</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
-
-<!-- PHÂN TRANG -->
-<nav th:if="${posts.totalPages > 1}">
-    <ul class="pagination justify-content-center mt-3">
-        <li class="page-item" th:classappend="${posts.first} ? 'disabled'">
-            <a class="page-link"
-               th:href="@{${requestURI}(page=${posts.number - 1}, keyword=${keyword}, categoryId=${categoryId})}">
-                &laquo;
-            </a>
-        </li>
-
-        <li class="page-item"
-            th:each="i : ${#numbers.sequence(0, posts.totalPages - 1)}"
-            th:classappend="${i == posts.number} ? 'active'">
-            <a class="page-link"
-               th:href="@{${requestURI}(page=${i}, keyword=${keyword}, categoryId=${categoryId})}"
-               th:text="${i + 1}"></a>
-        </li>
-
-        <li class="page-item" th:classappend="${posts.last} ? 'disabled'">
-            <a class="page-link"
-               th:href="@{${requestURI}(page=${posts.number + 1}, keyword=${keyword}, categoryId=${categoryId})}">
-                &raquo;
-            </a>
-        </li>
-    </ul>
-</nav>
-
 
 </body>
 </html>

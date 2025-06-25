@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 
 @Controller
@@ -28,7 +29,6 @@ public class PostController {
     @GetMapping("/post")
     public String showPosts(HttpServletRequest request, Model model,
                             @RequestParam(defaultValue = "0") int page) {
-        // Sắp xếp theo createdAt giảm dần (mới nhất lên đầu)
         Pageable pageable = PageRequest.of(page, 5, Sort.by(Sort.Direction.DESC, "createdAt"));
         Page<Post> posts = postService.findAll(pageable);
 
@@ -46,33 +46,43 @@ public class PostController {
         return "post/add";
     }
     @GetMapping("/edit/{id}")
-    public String showEditPostForm(@PathVariable("id") int id, Model model) {
-        Post post = postService.findById(id);
-        model.addAttribute("post", post);
-        model.addAttribute("categories", categoryService.findAll());
-        return "post/edit";
+    public String showEditPostForm(@PathVariable("id") long id, Model model) {
+        Optional<Post> post = postService.findById(id);
+        if (post.isPresent()) {
+            model.addAttribute("post", post.get()); // ✅ Truyền đúng Post
+            model.addAttribute("categories", categoryService.findAll());
+            return "post/edit";
+        } else {
+            return "redirect:/post"; // hoặc trả về trang lỗi
+        }
     }
     @PostMapping("/edit/{id}")
     public String updatePost(@PathVariable("id") int id, @ModelAttribute Post post, RedirectAttributes redirectAttributes) {
-        post.setId(id);
+       post.setId(id);
         postService.add(post);
         redirectAttributes.addFlashAttribute("success", "Bài viết đã được cập nhật!");
         return "redirect:/post";
     }
     @GetMapping("/delete/{id}")
-    public String deletePost(@PathVariable("id") int id, RedirectAttributes redirectAttributes) {
-        postService.deleteById(id);
+    public String deletePost(@PathVariable("id") long id, RedirectAttributes redirectAttributes) {
+        postService.delete(id);
         redirectAttributes.addFlashAttribute("success", "Bài viết đã bị xóa!");
         return "redirect:/post";
     }
     @GetMapping("/post/{id}")
-    public String viewPost(@PathVariable("id") int id, Model model) {
-        model.addAttribute("post", postService.findById(id));
-        return "post/views";
+    public String viewPost(@PathVariable("id") long id, Model model) {
+        Optional<Post> post = postService.findById(id);
+        if (post.isPresent()) {
+            model.addAttribute("post", post.get());
+            return "post/views";
+        } else {
+            return "redirect:/post"; // hoặc trả về trang lỗi tùy bạn
+        }
     }
+
     @GetMapping("/post/search")
     public String searchPosts(@RequestParam(value = "keyword", required = false) String keyword,
-                              @RequestParam(value = "categoryId", required = false) Integer categoryId,
+                              @RequestParam(value = "categoryId", required = false) Long categoryId,
                               @RequestParam(value = "page", defaultValue = "0") int page,
                               Model model) {
 

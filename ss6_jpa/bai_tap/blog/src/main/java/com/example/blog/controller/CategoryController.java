@@ -32,34 +32,35 @@ public class CategoryController {
     // Xử lý thêm mới
     @PostMapping("/add")
     public String addCategory(@ModelAttribute Category category, RedirectAttributes redirectAttributes) {
-        categoryService.add(category);
+        categoryService.save(category);
         redirectAttributes.addFlashAttribute("success", "Thêm thể loại thành công!");
         return "redirect:/category";
     }
 
     // Hiển thị form chỉnh sửa
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Integer id, Model model) {
-        Category category = categoryService.findById(id);
-        if (category == null) {
-            return "redirect:/category";
-        }
-        model.addAttribute("category", category);
-        return "category/edit";
+    public String showEditForm(@PathVariable Long id, Model model) {
+        return categoryService.findById(id)
+                .map(category -> {
+                    model.addAttribute("category", category);
+                    return "category/edit";
+                })
+                .orElse("redirect:/category");
     }
+
 
     // Xử lý cập nhật
     @PostMapping("/edit")
     public String updateCategory(@ModelAttribute Category category, RedirectAttributes redirectAttributes) {
-        categoryService.update(category);
+        categoryService.save(category);
         redirectAttributes.addFlashAttribute("success", "Cập nhật thể loại thành công!");
         return "redirect:/category";
     }
 
     // Xoá thể loại
     @GetMapping("/delete/{id}")
-    public String deleteCategory(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
-        categoryService.deleteById(id);
+    public String deleteCategory(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        categoryService.delete(id);
         redirectAttributes.addFlashAttribute("success", "Xoá thể loại thành công!");
         return "redirect:/category";
     }
